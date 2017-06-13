@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lekker Poetsen!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="css/overzicht.css" />
+</head>
+<body>
+	<div id="frame">
+		<div id="header">
+			<h1>Lekker poetsen!<button id="weekButton">Volgende week</button></h1>
+		</div>
+		
+		<div id="menu">
+			<ul id="navbar">
+				<li><a href="overzicht.html" class="currentPage">Overzicht</a></li>
+				<li><a href="boetes-uitkeren.html">Boetes uitkeren</a></li>
+				<li><a href="boete-wijzigen.html">Boete wijzigen</a></li>
+				<li><a href="taak-toevoegen.html">Taak toevoegen</a></li>
+				<li><a href="taak-verwijderen.html">Taak verwijderen</a></li>
+				<li><a>Uitloggen</a></li>
+			</ul>
+		</div>
+		
+		<div id="container">
+			<h2>Overzicht</h2>
+			<div id=tableDiv>
+				<table id="rooster"></table>
+			</div>
+		</div>
+	</div>
+	
+	<script src="javascript/jquery-3.2.1.js"></script>
+	<script src="javascript/week.js"></script>
+	<script src="javascript/overzicht.js"></script>
+</body>
+</html>

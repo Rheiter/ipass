@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lekker Poetsen!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="css/taak-toevoegen.css" />
+</head>
+<body>
+	<div id="frame">
+		<div id="header">
+			<h1>Lekker poetsen!</h1>
+		</div>
+		
+		<div id="menu">
+			<ul id="navbar">
+				<li><a href="index.html">Overzicht</a></li>
+				<li><a href="boetes-uitkeren.html">Boetes uitkeren</a></li>
+				<li><a href="boete-wijzigen.html">Boete wijzigen</a></li>
+				<li><a href="taak-toevoegen.html" class="currentPage">Taak toevoegen</a></li>
+				<li><a href="taak-verwijderen.html">Taak verwijderen</a></li>
+				<li><a>Uitloggen</a></li>
+			</ul>
+		</div>
+		
+		<div id="container">
+			<h3>Taak toevoegen</h3>
+			<p><span id="added"></span>Voeg een nieuwe taak toe</p>
+			<div id="formDiv">
+				<form id="form">
+					<label for="taak">Taak</label>
+					<input type="text" id="taak" name="naam" placeholder="Naam van de taak..">
+					<label for="omschrijving">Omschrijving</label>
+					<input type="text" id="omschrijving" name="omschrijving" placeholder="Omschrijving van de taak..">
+					<input type="button" id="submit" value="Toevoegen">
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<script src="javascript/jquery-3.2.1.js"></script>
+	<script src="javascript/taak-toevoegen.js"></script>
+</body>
+</html>

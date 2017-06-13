@@ -1,0 +1,36 @@
+#tableDiv {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th, td {
+	border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even){background-color: white;}
+
+
+.gedaan {
+	background-color: #4dff4d;
+	color: white;
+}
+
+tr:nth-child(2) td.nietGedaan {
+	background-color: #ff4d4d;
+	color: white;
+}

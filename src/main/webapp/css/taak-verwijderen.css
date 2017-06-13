@@ -1,0 +1,24 @@
+#taken {
+	list-style-type: none;
+	background-color: #f1f1f1;
+	width: 25%;
+	height: 100%;
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+}
+
+#taken li {
+	display: block;
+	color: #000;
+	padding: 8px 16px;
+}
+
+#taken li:hover:not(.selected) {
+	background-color: #555;
+	color: white;
+}
+
+.selected {
+	background-color: #4CAF50;
+}
