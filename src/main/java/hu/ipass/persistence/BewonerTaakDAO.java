@@ -104,7 +104,7 @@ public class BewonerTaakDAO extends BaseDAO {
 	 */
 	public List<BewonerTaak> selectThisWeek(String sysdate) {
 		String query = "select * from bewoner_taak where datum = "
-				+ "date(date_trunc('week', cast('" + sysdate + "' as timestamp))) + 6"
+				+ "date(date_trunc('week', cast('" + sysdate + "' as timestamp))) + 6 "
 				+ "order by bewonerID";
 		return select(query);
 	}

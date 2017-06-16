@@ -10,10 +10,10 @@ function init() {
 $("#uitkeren").click(function() {
 	var schulden = false;
 	$.each($("td"), function(i, td) {
-		if (i > 0 && td.innerHTML !== "0") {
-			schulden = true;
+		if (i > 0 && td.innerHTML !== "\u20AC0") {
 		}
 	});
+	console.log(schulden);
 	if (schulden == false) {
 		alert("Er zijn op het moment geen schulden.");
 	}

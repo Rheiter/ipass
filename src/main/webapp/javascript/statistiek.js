@@ -1,6 +1,4 @@
 google.charts.load('current', {packages: ['corechart', 'bar', 'line']});
-google.charts.setOnLoadCallback(drawPersoonlijkeStatistiek);
-google.charts.setOnLoadCallback(drawStatistiek);
 
 persoonlijkeData = [];
 algemeneData = [];
@@ -14,7 +12,9 @@ function loadPersoonlijkeData() {
 			xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
 		},
 		success: function (data) {
+			console.log(data);
 			persoonlijkeData = data;
+			google.charts.setOnLoadCallback(drawPersoonlijkeStatistiek);
 		},
 		error: function(data) {
 			console.log("error");
@@ -37,6 +37,7 @@ function loadAlgemeneData() {
 				var dateOptions = {year: 'numeric', month: 'long', day: 'numeric' };
 				var tooltipString = "<b>" + date.toLocaleDateString("nl-NL",dateOptions) + "</b><br>" + "Gedaan: <b>" + bt[3] +"</b>";
 				algemeneData.push([new Date(bt[0], bt[1], bt[2]), bt[4], tooltipString]);
+				google.charts.setOnLoadCallback(drawStatistiek);
 			});
 		},
 		error: function(data) {
@@ -46,7 +47,9 @@ function loadAlgemeneData() {
 }
 
 loadPersoonlijkeData();
+console.log(persoonlijkeData);
 loadAlgemeneData();
+console.log(algemeneData);
 
 function drawPersoonlijkeStatistiek() {
       var data = google.visualization.arrayToDataTable(persoonlijkeData);
