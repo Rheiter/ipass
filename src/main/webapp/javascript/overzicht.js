@@ -1,6 +1,3 @@
-console.log("hier komt de gebruikersnaam:");
-console.log(sessionStorage.getItem("gebruikersnaam"));
-
 $(function() {
 	init();
 });

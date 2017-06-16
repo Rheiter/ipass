@@ -48,7 +48,6 @@ public class BewonerTaakDAO extends BaseDAO {
 		return results;
 	}
 	
-	// Wordt niet gebruik, voor statistieken? ###################################
 	/**
 	 * Select alle BewonerTaken uit de database
 	 * @return - Lijst met alle BewonerTaken
@@ -62,7 +61,7 @@ public class BewonerTaakDAO extends BaseDAO {
 	 * Select BewonerTaak uit de database met een bepaald bewonerID, taakID
 	 * en datum
 	 * 
-	 * @return - Taak met bepaald bewonerID, taakID en datum
+	 * @return - BewonerTaak met bepaald bewonerID, taakID en datum
 	 */
 	public BewonerTaak selectByID(BewonerTaak bt) {
 		String query = String.format("select * from bewoner_taak where "
@@ -71,6 +70,15 @@ public class BewonerTaakDAO extends BaseDAO {
 		return select(query).get(0);
 	}
 	
+	/**
+	 * Select BewonerTaken uit de database met een bepaald bewonerID
+	 * @param bewonerID bewonerID
+	 * @return  Lijst met BewonerTaken met een bepaald bewonerID
+	 */
+	public List<BewonerTaak> selectByBewonerID(int bewonerID) {
+		String query = "select * from bewoner_taak where bewonerID = " + bewonerID;
+		return select(query);
+	}
 	/**
 	 * Selecteer de BewonerTaken die bij vorige week horen
 	 * 

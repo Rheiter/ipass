@@ -61,6 +61,17 @@ public class BewonerDAO extends BaseDAO {
 	}
 	
 	/**
+	 * Select bewoner uit de database met een bepaalde gebruikersnaam
+	 * 
+	 * @return - Bewoner met bepaalde gebruikersnaam
+	 */
+	public Bewoner selectByGebruikersnaam(String gebruikersnaam) {
+		String query = "select * from bewoner where gebruikersnaam = '" + gebruikersnaam + "' order by bewonerID";
+		List<Bewoner> result = select(query);		
+		return result.get(0);
+	}
+	
+	/**
 	 * Haalt de totale schuld van alle bewoners op uit de database.
 	 * 
 	 * @return - Totale schuld van alle bewoners

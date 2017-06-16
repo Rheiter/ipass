@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lekker Poetsen!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="css/overzicht.css" />
+</head>
+<body>
+	<div id="frame">
+		<div id="header">
+			<h1>Lekker poetsen!<button id="weekButton">Volgende week</button></h1>
+		</div>
+		
+		<div id="menu">
+			<ul id="navbar">
+				<li><a href="overzicht.html" class="currentPage">Overzicht</a></li>
+				<li><a href="uitkeren.html">Boetes uitkeren</a></li>
+				<li><a href="taak-toevoegen.html">Taak toevoegen</a></li>
+				<li><a href="taak-verwijderen.html">Taak verwijderen/wijzigen</a></li>
+				<li><a id="logout">Uitloggen</a></li>
+			</ul>
+		</div>
+		
+		<div id="container">
+			<h2>Statistiek</h2>
+			<div id=chart_div></div>
+			<div id=curve_chart></div>
+		</div>
+	</div>
+	
+	<script src="javascript/jquery-3.2.1.js"></script>
+	<script src="javascript/auth.js"></script>
+	<script src="javascript/week.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="javascript/statistiek.js"></script>
+</body>
+</html>

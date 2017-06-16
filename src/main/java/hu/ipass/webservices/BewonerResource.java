@@ -8,7 +8,11 @@ import javax.json.*;
 import javax.ws.rs.*;
 
 import hu.ipass.model.Bewoner;
+import hu.ipass.model.BewonerTaak;
+import hu.ipass.model.Taak;
 import hu.ipass.persistence.BewonerDAO;
+import hu.ipass.persistence.BewonerTaakDAO;
+import hu.ipass.persistence.TaakDAO;
 
 @Path("/bewoners")
 public class BewonerResource {
