@@ -105,13 +105,12 @@ public class TaakDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal de laatst toegevoegde taak op
-			result = selectLast();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		// Haal de laatst toegevoegde taak op
+		result = selectLast();
 		return result;
 	}
 	
@@ -139,13 +138,12 @@ public class TaakDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal de aangepaste taak op uitde database
-			result = selectByID(t.getTaakID());
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		// Haal de aangepaste taak op uitde database
+		result = selectByID(t.getTaakID());
 		return result;
 	}
 	
@@ -169,13 +167,12 @@ public class TaakDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal de aangepaste taak op uit de datbase
-			result = selectByID(taakID);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		// Haal de aangepaste taak op uit de datbase
+		result = selectByID(taakID);
 		return result;
 	}
 }

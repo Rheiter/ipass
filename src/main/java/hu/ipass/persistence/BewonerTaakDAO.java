@@ -132,13 +132,12 @@ public class BewonerTaakDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal de nieuwe BewonerTaak op uit de database
-			result = selectByID(bt);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+		// Haal de nieuwe BewonerTaak op uit de database
+		result = selectByID(bt);
 		return result;
 	}
 	
@@ -257,6 +256,7 @@ public class BewonerTaakDAO extends BaseDAO {
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
+		
 		// Haal de nieuwe BewonerTaken op
 		return selectThisWeek(sysdate);
 	}
@@ -284,13 +284,12 @@ public class BewonerTaakDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal de aangepaste BewonerTaak op uit de database
-			result = selectByID(bt);
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+		// Haal de aangepaste BewonerTaak op uit de database
+		result = selectByID(bt);
 		return result;
 	}
 	

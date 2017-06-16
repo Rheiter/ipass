@@ -131,13 +131,12 @@ public class BewonerDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal de nieuwe bewoner op uit de database
-			result = selectByID(b.getBewonerID());
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+		// Haal de nieuwe bewoner op uit de database
+		result = selectByID(b.getBewonerID());
 		return result;
 	}
 	
@@ -165,14 +164,13 @@ public class BewonerDAO extends BaseDAO {
 
 			stmt.close();
 			con.close();
-			
-			// Sla de aangepaste bewoner op
-			result = selectByID(b.getBewonerID());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+		// Sla de aangepaste bewoner op
+		result = selectByID(b.getBewonerID());
 		return result;
 	}
 	
@@ -228,13 +226,12 @@ public class BewonerDAO extends BaseDAO {
 			stmt.close();
 			con.close();
 			
-			// Haal alle bewoners op uit de database
-			result = selectAll();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+		// Haal alle bewoners op uit de database
+		result = selectAll();
 		return result;
 	}
 	
@@ -290,6 +287,7 @@ public class BewonerDAO extends BaseDAO {
 				role = resultSet.getString("rol");
 			}
 			
+			resultSet.close();
 			stmt.close();
 			con.close();
 			
