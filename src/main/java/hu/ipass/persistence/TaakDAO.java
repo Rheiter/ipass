@@ -33,7 +33,11 @@ public class TaakDAO extends BaseDAO {
 				Taak taak = new Taak(taakID, naam, omschrijving, boete, actief);
 				results.add(taak);
 			}
-		
+			
+			resultSet.close();
+			stmt.close();
+			con.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,8 +73,7 @@ public class TaakDAO extends BaseDAO {
 		String query = "select * from taak where actief = true order by taakID desc limit 1";
 		return select(query).get(0);
 	}
-	
-	// Wordt niet gebruikt ######################################################
+
 	/**
 	 * Selecteer de taak met taakID 9999
 	 * 
@@ -98,6 +101,9 @@ public class TaakDAO extends BaseDAO {
 			stmt.setString(2, t.getOmschrijving());
 			stmt.setDouble(3, t.getBoete());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Haal de laatst toegevoegde taak op
 			result = selectLast();
@@ -129,6 +135,9 @@ public class TaakDAO extends BaseDAO {
 			stmt.setDouble(3, t.getBoete());
 			stmt.setInt(4, t.getTaakID());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Haal de aangepaste taak op uitde database
 			result = selectByID(t.getTaakID());
@@ -156,6 +165,9 @@ public class TaakDAO extends BaseDAO {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, taakID);
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Haal de aangepaste taak op uit de datbase
 			result = selectByID(taakID);

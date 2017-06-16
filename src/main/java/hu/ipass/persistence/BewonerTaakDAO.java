@@ -40,7 +40,11 @@ public class BewonerTaakDAO extends BaseDAO {
 				Taak taak = tdao.selectByID(taakID);
 				results.add(new BewonerTaak(bewoner, taak, datum, gedaan));
 			}
-		
+			
+			resultSet.close();
+			stmt.close();
+			con.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -124,6 +128,9 @@ public class BewonerTaakDAO extends BaseDAO {
 			stmt.setInt(2, bt.getTaak().getTaakID());
 			stmt.setDate(3, bt.getDatum());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Haal de nieuwe BewonerTaak op uit de database
 			result = selectByID(bt);
@@ -177,7 +184,11 @@ public class BewonerTaakDAO extends BaseDAO {
 				stmt.setDate(3, sqlDate);
 				stmt.setBoolean(4, false);
 				stmt.executeUpdate();
+				
+				stmt.close();
 			}
+
+			con.close();
 			
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
@@ -237,7 +248,11 @@ public class BewonerTaakDAO extends BaseDAO {
 				stmt.setDate(3, sqlDate);
 				stmt.setBoolean(4, false);
 				stmt.executeUpdate();
+
+				stmt.close();
 			}
+
+			con.close();
 			
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
@@ -265,6 +280,9 @@ public class BewonerTaakDAO extends BaseDAO {
 			stmt.setInt(3, bt.getTaak().getTaakID());
 			stmt.setDate(4, bt.getDatum());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Haal de aangepaste BewonerTaak op uit de database
 			result = selectByID(bt);
@@ -293,6 +311,9 @@ public class BewonerTaakDAO extends BaseDAO {
 			stmt.setInt(2, bt.getTaak().getTaakID());
 			stmt.setDate(3, bt.getDatum());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Gelukt
 			return true;

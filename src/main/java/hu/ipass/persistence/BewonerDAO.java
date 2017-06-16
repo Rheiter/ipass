@@ -32,6 +32,10 @@ public class BewonerDAO extends BaseDAO {
 				Bewoner bewoner = new Bewoner(bewonerID, gebruikersnaam, wachtwoord, schuld);
 				results.add(bewoner);
 			}
+			
+			resultSet.close();
+			stmt.close();
+			con.close();
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,6 +95,10 @@ public class BewonerDAO extends BaseDAO {
 			while (resultSet.next()) {
 				result = resultSet.getInt("totaal");
 			}
+			
+			resultSet.close();
+			stmt.close();
+			con.close();
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,6 +127,9 @@ public class BewonerDAO extends BaseDAO {
 			stmt.setString(2, b.getWachtwoord());
 			stmt.setDouble(3, b.getSchuld());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Haal de nieuwe bewoner op uit de database
 			result = selectByID(b.getBewonerID());
@@ -151,10 +162,13 @@ public class BewonerDAO extends BaseDAO {
 			stmt.setDouble(3, b.getSchuld());
 			stmt.setInt(4, b.getBewonerID());
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Sla de aangepaste bewoner op
 			result = selectByID(b.getBewonerID());
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -175,6 +189,9 @@ public class BewonerDAO extends BaseDAO {
 			String query = "update bewoner set schuld = 0";
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
+
+			stmt.close();
+			con.close();
 			
 			// Gelukt
 			return true;
@@ -207,6 +224,9 @@ public class BewonerDAO extends BaseDAO {
 					+ "where bt.gedaan = false and datum = date(date_trunc('week', cast('" + sysdate + "' as timestamp))) + 6)";
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
+
+			stmt.close();
+			con.close();
 			
 			// Haal alle bewoners op uit de database
 			result = selectAll();
@@ -233,6 +253,9 @@ public class BewonerDAO extends BaseDAO {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, bewonerID);
 			stmt.executeUpdate();
+
+			stmt.close();
+			con.close();
 			
 			// Gelukt
 			return true;
@@ -263,14 +286,17 @@ public class BewonerDAO extends BaseDAO {
 			ResultSet resultSet = stmt.executeQuery();
 			
 			// Sla het resultaat op
-			if (resultSet.next())
-			role = resultSet.getString("rol");
-		
+			if (resultSet.next()) {
+				role = resultSet.getString("rol");
+			}
+			
+			stmt.close();
+			con.close();
+			
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
 		
 		return role;
 	}
-
 }
