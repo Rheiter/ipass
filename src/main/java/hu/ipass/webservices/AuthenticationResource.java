@@ -11,7 +11,7 @@ import hu.ipass.persistence.BewonerDAO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
-@Path("/authentication")
+@Path("authentication")
 public class AuthenticationResource {
 	final static public Key key = MacProvider.generateKey();
 	@POST
