@@ -14,7 +14,7 @@ import hu.ipass.persistence.BewonerDAO;
 import hu.ipass.persistence.BewonerTaakDAO;
 import hu.ipass.persistence.TaakDAO;
 
-@Path("/bewoners")
+@Path("bewoners")
 public class BewonerResource {
 	
 	/**

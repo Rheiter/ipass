@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import hu.ipass.model.Taak;
 import hu.ipass.persistence.TaakDAO;
 
-@Path("/taken")
+@Path("taken")
 public class TaakResource {
 	
 	/**
