@@ -4,6 +4,7 @@
 	<title>Lekker Poetsen!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/grid.css" />
+	<link rel="stylesheet" type="text/css" href="css/taak-toevoegen.css" />
 	<link rel="stylesheet" type="text/css" href="css/taak-verwijderen.css" />
 </head>
 <body>
@@ -24,18 +25,32 @@
 		</div>
 		
 		<div id="container">
-			<p><span id="removed"></span>Selecteer een taak om te verwijderen</p>
-			<div id="takenDiv">
-				<ul id="taken"></ul>
-			</div>
-			<div id="confirm" hidden="true">
-				<p>Weet je zeker dat je de taak "<span id="chosen"></span>" wilt verwijderen?</p>
-				<button id="delete">Verwijderen</button>
+			<h3>Taak toevoegen</h3>
+			<p><span id="removed"></span>Selecteer een taak om te verwijderen/wijzigen.</p>
+			<div id=formDiv>
+				<div id="takenDiv">
+					<ul id="taken"></ul>
+				</div>
+				<div id="confirm" hidden="true">
+					<form id="form">
+					<label for="taak">Taak</label>
+					<input type="text" id="naam" name="naam" placeholder="Naam van de taak..">
+					<label for="omschrijving">Omschrijving</label>
+					<input type="text" id="omschrijving" name="omschrijving" placeholder="Omschrijving van de taak..">
+					<label for="boete">Boete</label>
+					<input type="number" id="boete" name="boete" placeholder="Hoogte van de boete..">
+					<div id="buttons">
+						<input type="button" id="update" value="Wijzigen">
+						<input type="button" id="delete" value="Verwijderen">
+					</div>
+				</form>
+				</div>
 			</div>
 		</div>
 	</div>
 	
 	<script src="javascript/jquery-3.2.1.js"></script>
+	<script src="javascript/auth.js"></script>
 	<script src="javascript/taak-verwijderen.js"></script>
 </body>
 </html>

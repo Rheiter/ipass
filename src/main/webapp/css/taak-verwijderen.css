@@ -1,11 +1,25 @@
+#formDiv {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	grid-template-rows: 1;
+}
+
+#takenDiv	{ grid-column: 1/2; grid-row: 1/2; }
+#confirm	{ grid-column: 2/3; grid-row: 1/2; }
+
 #taken {
 	list-style-type: none;
 	background-color: #f1f1f1;
-	width: 25%;
-	height: 100%;
 	overflow: auto;
 	margin: 0;
 	padding: 0;
+}
+
+#confirm {
+	margin: 0px 10px;
 }
 
 #taken li {
@@ -21,4 +35,21 @@
 
 .selected {
 	background-color: #4CAF50;
+	color: white;
+}
+
+input[type=button] {
+	width: 45%;
+}
+
+#buttons {
+	width: 40%;
+	float: right;
+}
+#update {
+	float: left;
+}
+
+#delete {
+	float: right;
 }

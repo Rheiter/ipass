@@ -3,7 +3,6 @@ package hu.ipass.persistence;
 import java.sql.*;
 import java.sql.Date;
 import java.text.*;
-import java.time.temporal.*;
 import java.util.*;
 
 import hu.ipass.model.Bewoner;
@@ -11,17 +10,27 @@ import hu.ipass.model.BewonerTaak;
 import hu.ipass.model.Taak;
 
 public class BewonerTaakDAO extends BaseDAO {
-	private BewonerDAO bdao = new BewonerDAO();
-	private TaakDAO tdao = new TaakDAO();
 	
+	/**
+	 * Zet gegevens uit de database om in een BewonerTaak POJO.
+	 * 
+	 * @param query - select sql query
+	 * @return - Lijst met BewonerTaken
+	 */
 	private List<BewonerTaak> select(String query) {
+		BewonerDAO bdao = new BewonerDAO();
+		TaakDAO tdao = new TaakDAO();
+		
 		List<BewonerTaak> results = new ArrayList<BewonerTaak>();
 		
+		// Maak connectie met de database
 		try (Connection con = super.getConnection()) {
 			
+			// Gebruik de query op de database
 			Statement stmt = con.createStatement();
 			ResultSet resultSet = stmt.executeQuery(query);
 			
+			// Maak een BewonerTaak POJO voor elke rij van het resultaat
 			while (resultSet.next()) {
 				int bewonerID = resultSet.getInt("bewonerID");
 				int taakID = resultSet.getInt("taakID");
@@ -39,12 +48,22 @@ public class BewonerTaakDAO extends BaseDAO {
 		return results;
 	}
 	
-	
+	// Wordt niet gebruik, voor statistieken? ###################################
+	/**
+	 * Select alle BewonerTaken uit de database
+	 * @return - Lijst met alle BewonerTaken
+	 */
 	public List<BewonerTaak> selectAll() {
 		String query = "select * from bewoner_taak order by datum, bewonerID";
 		return select(query);
 	}
 	
+	/**
+	 * Select BewonerTaak uit de database met een bepaald bewonerID, taakID
+	 * en datum
+	 * 
+	 * @return - Taak met bepaald bewonerID, taakID en datum
+	 */
 	public BewonerTaak selectByID(BewonerTaak bt) {
 		String query = String.format("select * from bewoner_taak where "
 				+ "bewonerID = %d and taakID = %d and datum = to_date('" + bt.getDatum() + "', 'YYYY-MM-DD') order by datum, bewonerID",
@@ -52,66 +71,185 @@ public class BewonerTaakDAO extends BaseDAO {
 		return select(query).get(0);
 	}
 	
-	public List<BewonerTaak> selectNext10Weeks(String sysdate) {
-		String query = "select * from bewoner_taak where datum >= '"
-				+ sysdate + "' order by datum, bewonerID";
+	/**
+	 * Selecteer de BewonerTaken die bij vorige week horen
+	 * 
+	 * @param sysdate - huidige datum in het systeem
+	 * @return - Lijst met BewonerTaken die bij vorige week horen
+	 */
+	public List<BewonerTaak> selectLastWeek(String sysdate) {
+		String query = "select * from bewoner_taak where datum = "
+				+ "date(date_trunc('week', cast('" + sysdate + "' as timestamp))) - 1"
+				+ "order by bewonerID";
 		return select(query);
 	}
 	
-	public boolean insert10(int week, String sysdate) {
-		List<Bewoner> bewoners = bdao.selectAll();
-		List<Taak> taken = tdao.selectAll();
-		List<BewonerTaak> bts = selectAll();
+	/**
+	 * Selecteer de BewonerTaken die bij deze week horen
+	 * 
+	 * @param sysdate - huidige datum in het systeem
+	 * @return - Lijst met BewonerTaken die bij deze week horen
+	 */
+	public List<BewonerTaak> selectThisWeek(String sysdate) {
+		String query = "select * from bewoner_taak where datum = "
+				+ "date(date_trunc('week', cast('" + sysdate + "' as timestamp))) + 6"
+				+ "order by bewonerID";
+		return select(query);
+	}
+	
+	/**
+	 * Insert een BewonerTaak in de database
+	 * 
+	 * @return - de nieuwe BewonerTaak of null
+	 */
+	public BewonerTaak insert(BewonerTaak bt) {
+		BewonerTaak result = null;
 		
-		int c = 0;
-		if (bts.size() > 0) {
-			while (true) {
-				if (taken.get(bewoners.size() % taken.size()).getTaakID() == bts.get(bts.size() - 1).getTaak().getTaakID()) {
-					c += 1;
-				} else {
-					System.out.println(c);
-					break;
-				}
-			}
-		}
-			
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		
+		// Maak connectie met de database
 		try (Connection con = super.getConnection()) {
 			
-			for (int i = 0; i < (10 - week); i++) {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(sdf.parse(sysdate));
-				cal.add(Calendar.DAY_OF_YEAR, ((week + i) * 7));
-				Date sqlDate = new Date(cal.getTimeInMillis());
-				java.util.Date datum = new java.util.Date();
-				datum.toInstant().plus(((week + i) * 7), ChronoUnit.DAYS);
-				
-				for (int j = 0; j < bewoners.size(); j++) {
-					Bewoner b = bewoners.get(j);
-					String query = "insert into bewoner_taak (bewonerID, taakID, datum, gedaan) "
-							+ "values (?, ?, date(date_trunc('week', cast(? as timestamp))) + 6, ?)";
-					PreparedStatement stmt = con.prepareStatement(query);
-					stmt.setInt(1, b.getBewonerID());
-					stmt.setInt(2, (taken.get((j + i + c) % taken.size()).getTaakID()));
-					stmt.setDate(3, sqlDate);
-					stmt.setBoolean(4, false);
-					stmt.executeUpdate();
-				}
-			}
+			// Maak de query en gebruik hem op de database
+			String query = "insert into bewoner_taak (bewonerID, taakID, datum) "
+					+ "values(?, ?, ?)";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, bt.getBewoner().getBewonerID());
+			stmt.setInt(2, bt.getTaak().getTaakID());
+			stmt.setDate(3, bt.getDatum());
+			stmt.executeUpdate();
 			
-			return true;
+			// Haal de nieuwe BewonerTaak op uit de database
+			result = selectByID(bt);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Voegt voor elke bewoner een nieuwe BewonerTaak in in de database als het de
+	 * eerste week is.
+	 * 
+	 * @param sysdate - Huidige datum in het systeem
+	 * @return - De ingevoerde BewonerTaken
+	 */
+	public List<BewonerTaak> insertFirstWeek(String sysdate) {
+		BewonerDAO bdao = new BewonerDAO();
+		TaakDAO tdao = new TaakDAO();
+		
+		List<Bewoner> bewoners = bdao.selectAll();
+		List<Taak> taken = tdao.selectAll();
+		
+		// Voeg taak "Vrij" toe tot er evenveel taken als bewoners zijn
+		while (taken.size() < bewoners.size()) {
+			taken.add(tdao.selectVrij());
+		}
+		
+		// Maak connectie met de database
+		try (Connection con = super.getConnection()) {
+			
+			// Zet de huidige systeemdatum om naar een java.sql.Date
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			java.util.Date date = sdf.parse(sysdate);
+			Date sqlDate = new Date(date.getTime());
+			
+			// Maak een query voor elke bewoner en gebruik deze op de database
+			for(int i = 0; i < bewoners.size(); i ++) {
+				
+				Bewoner b = bewoners.get(i);
+				
+				String query = "insert into bewoner_taak (bewonerID, taakID, datum, gedaan) "
+						+ "values (?, ?, date(date_trunc('week', cast(? as timestamp))) + 6, ?)";
+				
+				PreparedStatement stmt = con.prepareStatement(query);
+				stmt.setInt(1, b.getBewonerID());
+				// Bereken welke taak de bewoner moet doen
+				stmt.setInt(2, (taken.get(i % taken.size()).getTaakID()));
+				stmt.setDate(3, sqlDate);
+				stmt.setBoolean(4, false);
+				stmt.executeUpdate();
+			}
 			
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
-			return false;
-		}	
+		}
+		
+		// Haal de nieuwe BewonerTaken op uit de database
+		return selectThisWeek(sysdate);
 	}
 	
+	/**
+	 * Voegt voor elke bewoner een nieuwe BewonerTaak in in de database als het 
+	 * niet de eerste week is.
+	 * 
+	 * @param sysdate - Huidige datum in het systeem
+	 * @return - De ingevoerde BewonerTaken
+	 */
+	public List<BewonerTaak> insertWeek(String sysdate) {
+		TaakDAO tdao = new TaakDAO();
+		BewonerDAO bdao = new BewonerDAO();
+		
+		List<BewonerTaak> bts = selectLastWeek(sysdate);
+		List<Taak> taken = tdao.selectAll();
+		List<Bewoner> bewoners = bdao.selectAll();
+		
+		// Voeg taak "Vrij" toe tot er evenveel taken als bewoners zijn
+		while (taken.size() < bewoners.size()) {
+			taken.add(tdao.selectVrij());
+		}
+		
+		// Bereken welke taak de eerste bewoner vorige week had
+		BewonerTaak bt = bts.get(0);
+		int shift = 0;
+		for (int i = 0; i < taken.size(); i ++) {
+			if (bt.getTaak().getTaakID() == taken.get(i).getTaakID()) {
+				shift = i;
+			}
+		}
+		
+		// Maak connectie met de database
+		try (Connection con = super.getConnection()) {
+
+			// Zet de systeemdatum om in een java.sql.Date
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			java.util.Date date = sdf.parse(sysdate);
+			Date sqlDate = new Date(date.getTime());
+			
+			// Maak een query voor elke bewoner en gebruik deze op de database
+			for(int i = 0; i < bts.size(); i ++) {
+				
+				String query = "insert into bewoner_taak (bewonerID, taakID, datum, gedaan) "
+						+ "values (?, ?, date(date_trunc('week', cast(? as timestamp))) + 6, ?)";
+				
+				PreparedStatement stmt = con.prepareStatement(query);
+				stmt.setInt(1, bts.get(i).getBewoner().getBewonerID());
+				// Bereken welke taak de bewoner moet doen
+				stmt.setInt(2, taken.get((i + shift + 1) % taken.size()).getTaakID());
+				stmt.setDate(3, sqlDate);
+				stmt.setBoolean(4, false);
+				stmt.executeUpdate();
+			}
+			
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
+		}
+		// Haal de nieuwe BewonerTaken op
+		return selectThisWeek(sysdate);
+	}
+	
+	/**
+	 * Update attribuut gedaan van een BewonerTaak
+	 * 
+	 * @return - De aangepaste BewonerTaak
+	 */
 	public BewonerTaak update(BewonerTaak bt) {
 		BewonerTaak result = null;
 		
+		// Maak connectie met de database
 		try (Connection con = super.getConnection()) {
+			
+			// Maak de query en gebruik hem op de database
 			String query = "update bewoner_taak set gedaan = ? where bewonerID = ? and taakID = ? and datum = ?";
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setBoolean(1, bt.isGedaan());
@@ -120,6 +258,7 @@ public class BewonerTaakDAO extends BaseDAO {
 			stmt.setDate(4, bt.getDatum());
 			stmt.executeUpdate();
 			
+			// Haal de aangepaste BewonerTaak op uit de database
 			result = selectByID(bt);
 			
 		} catch (SQLException e) {
@@ -127,5 +266,33 @@ public class BewonerTaakDAO extends BaseDAO {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * Verwijder een BewonerTaak uit de database
+	 * 
+	 * @return - True als het geslaagd is, false als het mislukt is
+	 */
+	public boolean delete(BewonerTaak bt) {
+		// Maak connectie met de database
+		try (Connection con = super.getConnection()) {
+			
+			// Maak de query en gebruik hem op de database
+			String query = "delete from bewoner_taak where "
+					+ "bewonerID = ? and taakID = ? and datum = ?";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, bt.getBewoner().getBewonerID());
+			stmt.setInt(2, bt.getTaak().getTaakID());
+			stmt.setDate(3, bt.getDatum());
+			stmt.executeUpdate();
+			
+			// Gelukt
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// Niet gelukt
+			return false;
+		}
 	}
 }

@@ -4,6 +4,7 @@ public class Bewoner {
 	private int bewonerID;
 	private String gebruikersnaam;
 	private String wachtwoord;
+	private String rol;
 	private double schuld;
 	
 	public Bewoner(int bewonerID, String gebruikersnaam, String wachtwoord, double schuld) {
@@ -11,6 +12,7 @@ public class Bewoner {
 		this.bewonerID = bewonerID;
 		this.gebruikersnaam = gebruikersnaam;
 		this.wachtwoord = wachtwoord;
+		this.rol = "user";
 		this.schuld = schuld;
 	}
 
@@ -37,6 +39,14 @@ public class Bewoner {
 	public void setWachtwoord(String wachtwoord) {
 		this.wachtwoord = wachtwoord;
 	}
+	
+	public String getRol() {
+		return rol;
+	}
+	
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
 
 	public double getSchuld() {
 		return schuld;
@@ -49,6 +59,6 @@ public class Bewoner {
 	@Override
 	public String toString() {
 		return "Bewoner [bewonerID=" + bewonerID + ", gebruikersnaam=" + gebruikersnaam + ", wachtwoord=" + wachtwoord
-				+ ", schuld=" + schuld + "]";
+				+ ", rol=" + rol + ", schuld=" + schuld + "]";
 	}
 }
