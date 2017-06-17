@@ -82,35 +82,24 @@ public class StatistiekResource {
 	}
 	
 	/**
-	 * Haalt de data op uit de database die nodig is voor de persoonlijke statistiek
-	 * van een bewoner.
-	 * @param bewonerID bewonerID
+	 * Haalt de data op uit de database die nodig is voor de taken statistiek
+	 * 
 	 * @return json array met voor elke taak een json array met de naam van de taak,
 	 * 		het aantal keren gedaan en niet gedaan. 
 	 */
 	@GET
-	@Path("bewoner/{gebruikersnaam}")
+	@Path("taken")
 	@RolesAllowed("user")
 	@Produces("application/json")
-	public String bewonerStatistiek(@PathParam("gebruikersnaam") String gebruikersnaam) {
+	public String takenStatistiek() {
 		BewonerTaakDAO btdao = new BewonerTaakDAO();
 		TaakDAO tdao = new TaakDAO();
-		BewonerDAO bdao = new BewonerDAO();
-		
-		// Haal de Bewoner bij deze gebruikersnaam
-		Bewoner bewoner = bdao.selectByGebruikersnaam(gebruikersnaam);
 		
 		// Haal alle BewonerTaken van deze bewoner
-		List<BewonerTaak> bts = btdao.selectByBewonerID(bewoner.getBewonerID());
+		List<BewonerTaak> bts = btdao.selectAll();
 		
 		// Maak een lijst met alle taakID's van de actieve taken
 		List<Integer> taken = new ArrayList<Integer>();
-		for (Taak t : tdao.selectAll()) {
-			if(!(taken.contains(t.getTaakID()))) {
-				taken.add(t.getTaakID());
-			}
-		}
-		
 		// Maak een ArrayList met HashMaps met de taak, gedaan en niet gedaan
 		List<Map<String, Object>> mapArray = new ArrayList<Map<String, Object>>();
 		for (Taak t : tdao.selectAll()) {
@@ -119,6 +108,7 @@ public class StatistiekResource {
 			map.put("gedaan", 0);
 			map.put("nietGedaan", 0);
 			mapArray.add(map);
+			taken.add(t.getTaakID());
 		}
 		
 		// Kijk voor elke BewonerTaak of de taak in de lijst met huidige taken zit

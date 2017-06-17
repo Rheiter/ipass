@@ -8,11 +8,7 @@ import javax.json.*;
 import javax.ws.rs.*;
 
 import hu.ipass.model.Bewoner;
-import hu.ipass.model.BewonerTaak;
-import hu.ipass.model.Taak;
 import hu.ipass.persistence.BewonerDAO;
-import hu.ipass.persistence.BewonerTaakDAO;
-import hu.ipass.persistence.TaakDAO;
 
 @Path("bewoners")
 public class BewonerResource {
@@ -57,28 +53,6 @@ public class BewonerResource {
 		
 		JsonArray array = jab.build();
 		return array.toString();
-	}
-	
-	// Wordt niet gebruikt ######################################################
-	/**
-	 * Insert een nieuwe bewoner in de database.
-	 * 
-	 * @return Json object met de nieuwe bewoner
-	 */
-	@POST
-	@RolesAllowed("user")
-	@Produces("application/json")
-	public String insert(@FormParam("bewonerID") int bewonerID,
-							@FormParam("gebruikersnaam") String gebruikersnaam,
-							@FormParam("wachtwoord") String wachtwoord,
-							@FormParam("schuld") double schuld) {
-		
-		BewonerDAO bdao = new BewonerDAO();
-		Bewoner result = null;
-		Bewoner newBewoner = new Bewoner(bewonerID, gebruikersnaam, wachtwoord, schuld);
-		result = bdao.insert(newBewoner);
-		
-		return bewonerToJson(result).build().toString();
 	}
 	
 	/**
@@ -179,43 +153,5 @@ public class BewonerResource {
 		} else {
 			throw new Exception("Schuld resetten mislukt");
 		}
-	}
-	
-	// Wordt niet gebruikt ######################################################
-	/**
-	 * Update een bewoner in de database.
-	 * 
-	 * @return - Json object met de aangepaste bewoner of null
-	 */
-	@PUT
-	@RolesAllowed("user")
-	@Path("{bewonerID}")
-	@Produces("application/json")
-	public String update(@PathParam("bewonerID") int bewonerID,
-							@FormParam("gebruikersnaam") String gebruikersnaam,
-							@FormParam("wachtwoord") String wachtwoord,
-							@FormParam("schuld") double schuld) {
-		
-		BewonerDAO bdao = new BewonerDAO();
-		Bewoner result = null;
-		Bewoner newBewoner = new Bewoner(bewonerID, gebruikersnaam, wachtwoord, schuld);
-		result = bdao.update(newBewoner);
-		
-		return bewonerToJson(result).build().toString();
-	}
-	
-	// Wordt niet gebruikt ######################################################
-	/**
-	 * Verwijder een bewoner uit de database.
-	 * 
-	 * @param bewonerID - bewonerID van de te verwijderen bewoner
-	 * @return - true als het geslaagd is, false als het mislukt is
-	 */
-	@DELETE
-	@RolesAllowed("user")
-	@Path("{bewonerID}")
-	public boolean delete(@PathParam("bewonerID") int bewonerID) {
-		BewonerDAO bdao = new BewonerDAO();
-		return bdao.delete(bewonerID);
 	}
 }

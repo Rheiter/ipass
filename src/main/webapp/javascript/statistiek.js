@@ -1,10 +1,10 @@
 google.charts.load('current', {packages: ['corechart', 'bar', 'line']});
 
-persoonlijkeData = [];
+taakData = [];
 algemeneData = [];
 
-function loadPersoonlijkeData() {
-	var uri = "restservices/statistiek/bewoner/" + sessionStorage.getItem("gebruikersnaam");
+function loadTaakData() {
+	var uri = "restservices/statistiek/taken";
 	$.ajax(uri, {
 		type: "get",
 		beforeSend: function (xhr) {
@@ -12,7 +12,6 @@ function loadPersoonlijkeData() {
 			xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
 		},
 		success: function (data) {
-			console.log(data);
 			persoonlijkeData = data;
 			google.charts.setOnLoadCallback(drawPersoonlijkeStatistiek);
 		},
@@ -46,18 +45,15 @@ function loadAlgemeneData() {
 	});
 }
 
-loadPersoonlijkeData();
-console.log(persoonlijkeData);
+loadTaakData();
 loadAlgemeneData();
-console.log(algemeneData);
 
 function drawPersoonlijkeStatistiek() {
       var data = google.visualization.arrayToDataTable(persoonlijkeData);
 
       var options = {
-      chartArea:{left:'15%',top:10,width:'50%',height:'75%'},
-      animation: {duration: 1000, easing: 'out', startup: true},
-        title: 'Motivation and Energy Level Throughout the Day',
+      animation: {duration: 1500, easing: 'out', startup: true},
+        title: 'Taken',
         isStacked: 'percent',
         hAxis: {
           title: 'Taak'
@@ -77,17 +73,23 @@ function drawStatistiek() {
 
     var options = {
       title: 'Percentage gedaan',
-      animation: {duration: 1000, easing: 'out', startup: true},
+      animation: {duration: 1500, easing: 'out', startup: true},
       vAxis: {
     	  minValue: 0,
     	  maxValue: 100,
     	  format: "#'%'"
       },
       tooltip: {isHtml: true},
-      legend: { position: 'bottom' }
+      legend: { position: 'none' }
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
     chart.draw(data, options);
   }
+
+$(window).on("resize", function (event) {
+
+    drawStatistiek();
+    drawPersoonlijkeStatistiek();
+});

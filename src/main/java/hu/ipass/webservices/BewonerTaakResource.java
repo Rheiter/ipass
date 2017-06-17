@@ -94,22 +94,7 @@ public class BewonerTaakResource {
 			// Voeg het json object toe aan het taken array van deze week
 			takenJab.add(taakJob);
 		}
-/*
-		//####################################################################
-		List<Integer> takenInBts = new ArrayList<Integer>();
-		if (taken.size() < bts.size()) {
-			
-		}
-		for (BewonerTaak bt : bts) {
-			int taakID = bt.getTaak().getTaakID();
-			if (takenInBts.contains(taakID)) {
-				bt.setTaak(tdao.selectByID(9999));
-			} else {
-				takenInBts.add(taakID);
-			}
-		}
-		//####################################################################
-		*/
+		
 		// Voeg de datum en het taken array toe aan het json object van deze week
 		job.add("datum", datum.toString())
 			.add("taken", takenJab);
@@ -140,11 +125,6 @@ public class BewonerTaakResource {
 				
 				taakJob.add("bewoner", bts.get(i).getBewoner().getGebruikersnaam())
 						.add("bewonerID", bts.get(i).getBewoner().getBewonerID())
-//						// Bereken attributen van taak die bij de volgende week horen
-//						.add("taak", bts.get((i + c) % bts.size()).getTaak().getNaam())
-//						.add("taakID", bts.get((i + c) % bts.size()).getTaak().getTaakID())
-//						.add("omschrijving", bts.get((i + c) % bts.size()).getTaak().getOmschrijving())
-//						.add("boete", bts.get((i + c) % bts.size()).getTaak().getBoete());
 						.add("taak", taken.get((i + c + shift) % taken.size()).getNaam())
 						.add("taakID", taken.get((i + c + shift) % taken.size()).getTaakID())
 						.add("omschrijving", taken.get((i + c + shift) % taken.size()).getOmschrijving())

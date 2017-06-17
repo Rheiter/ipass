@@ -78,11 +78,9 @@ $("table").on("click", "td", function() {
 	var td = $(this);
 	data = td.data();
 	var gedaan = data.gedaan;
-	console.log(gedaan);
 	if (Object.keys(data).length > 0
 			&& gedaan == false
 			&& data.bewoner == sessionStorage.getItem("gebruikersnaam")) {
-		console.log("in de functie");
 		data.gedaan = !(data.gedaan);
 		var uri = "restservices/bewoner-taak";
 		$.ajax(uri, {

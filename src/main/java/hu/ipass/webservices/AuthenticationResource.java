@@ -18,7 +18,6 @@ public class AuthenticationResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response authenticateUser(@FormParam("gebruikersnaam") String username,
 										@FormParam("wachtwoord") String password) {
-		System.out.println("auth resource");
 		try {
 			// Authenticate the user against the database
 			BewonerDAO bdao = new BewonerDAO();
