@@ -1,7 +1,4 @@
-#formDiv {
-	border-radius: 5px;
-	background-color: #f2f2f2;
-	padding: 20px;
+#content {
 	display: grid;
 	grid-template-columns: 1fr 3fr;
 	grid-template-rows: 1;
@@ -12,7 +9,7 @@
 
 #taken {
 	list-style-type: none;
-	background-color: #f1f1f1;
+	background-color: #e0f2f1;
 	overflow: auto;
 	margin: 0;
 	padding: 0;
@@ -29,12 +26,12 @@
 }
 
 #taken li:hover:not(.selected) {
-	background-color: #555;
+	background-color: #4db6ac;
 	color: white;
 }
 
 .selected {
-	background-color: #4CAF50;
+	background-color: #009688;
 	color: white;
 }
 
@@ -42,10 +39,12 @@ input[type=button] {
 	width: 45%;
 }
 
-#buttons {
-	width: 40%;
-	float: right;
+@media only screen and (max-width: 400px) {
+	input[type=button] {
+		font-size: 9px;
+	}
 }
+
 #update {
 	float: left;
 }

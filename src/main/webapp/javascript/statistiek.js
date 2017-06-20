@@ -49,47 +49,49 @@ loadTaakData();
 loadAlgemeneData();
 
 function drawPersoonlijkeStatistiek() {
-      var data = google.visualization.arrayToDataTable(persoonlijkeData);
+	var data = google.visualization.arrayToDataTable(persoonlijkeData);
 
-      var options = {
-      animation: {duration: 1500, easing: 'out', startup: true},
-        title: 'Taken',
-        isStacked: 'percent',
-        hAxis: {
-          title: 'Taak'
-        },
-        vAxis: {
-          title: 'Percentage',
-            ticks: [0, .25, .5, .75, 1]
-        }
-      };
+	var options = {
+		animation: {
+			duration: 1500,
+			easing: 'out',
+			startup: true
+		},
+		title: 'Taken',
+		isStacked: 'percent',
+		hAxis: {
+			title: 'Taak'
+		},
+		vAxis: {
+			title: 'Percentage',
+			ticks: [0, .25, .5, .75, 1]
+		}
+	};
 
-      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
+	var chart = new google.visualization.ColumnChart(document.getElementById('barChart'));
+	chart.draw(data, options);
+}
 
 function drawStatistiek() {
-    var data = google.visualization.arrayToDataTable(algemeneData);
-
-    var options = {
-      title: 'Percentage gedaan',
-      animation: {duration: 1500, easing: 'out', startup: true},
-      vAxis: {
-    	  minValue: 0,
-    	  maxValue: 100,
-    	  format: "#'%'"
-      },
-      tooltip: {isHtml: true},
-      legend: { position: 'none' }
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-    chart.draw(data, options);
-  }
-
-$(window).on("resize", function (event) {
-
-    drawStatistiek();
-    drawPersoonlijkeStatistiek();
-});
+	var data = google.visualization.arrayToDataTable(algemeneData);
+	
+	var options = {
+		title: 'Percentage gedaan',
+		animation: {
+			duration: 1500,
+			easing: 'out',
+			startup: true
+		},
+		vAxis: {
+			minValue: 0,
+			maxValue: 100,
+			format: "#'%'"
+		},
+		tooltip: {isHtml: true},
+		legend: { position: 'none' }
+	};
+	
+	var chart = new google.visualization.LineChart(document.getElementById('lineChart'));
+	
+	chart.draw(data, options);
+}

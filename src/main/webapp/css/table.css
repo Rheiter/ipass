@@ -1,6 +1,6 @@
 #tableDiv {
 	border-radius: 5px;
-	background-color: #f2f2f2;
+	background-color: #e0f2f1;
 	padding: 10px 20px;
 }
 
@@ -20,15 +20,15 @@ th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #4db6ac;
     color: white;
 }
 
 tr:nth-child(even){background-color: white;}
-
+tr:nth-child(odd){background-color: #b2dfdb}
 
 .gedaan {
-	background-color: #4dff4d;
+	background-color: #00c853;
 	color: white;
 }
 
@@ -39,7 +39,7 @@ tr:nth-child(even){background-color: white;}
 
 #uitkeren {
 	width: 100%;
-	background-color: #4CAF50;
+	background-color: #009688;
 	color: white;
 	padding: 14px 20px;
 	border: none;

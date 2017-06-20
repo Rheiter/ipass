@@ -28,3 +28,8 @@ $("#logout").click(function () {
 		window.location.replace("index.html");
 	}
 });
+
+$("#welkomSpan").text(sessionStorage.getItem("gebruikersnaam"));
+var sessionDate = new Date(sessionStorage.date);
+sessionDate = ("0" + sessionDate.getDate()).slice(-2) + "/" + ("0" + (sessionDate.getMonth() + 1)).slice(-2) + "/" + sessionDate.getFullYear();
+$("#datumSpan").text(sessionDate);

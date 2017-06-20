@@ -237,9 +237,7 @@ public class BewonerTaakResource {
 	@RolesAllowed("user")
 	@Path("verwijder-taak/{taakID}")
 	@Produces("application/json")
-	public String updateThisWeekDelTaak (@PathParam("taakID") int taakID, String sysdate) {
-		System.out.println("verwijder resource");
-		
+	public String updateThisWeekDelTaak (@PathParam("taakID") int taakID, String sysdate) {		
 		BewonerTaakDAO btdao = new BewonerTaakDAO();
 		TaakDAO tdao = new TaakDAO();
 		BewonerDAO bdao = new BewonerDAO();

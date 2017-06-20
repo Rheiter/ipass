@@ -3,29 +3,38 @@
 <head>
 	<title>Lekker Poetsen!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/grid.css" />
+	<link rel="stylesheet" media="only screen and (min-width: 901px)" href="css/grid.css"/>
+	<link rel="stylesheet" media="only screen and (min-width: 601px) and (max-width: 900px)" href="css/grid-narrow.css"/>
+	<link rel="stylesheet" media="only screen and (max-width: 600px)" href="css/grid-mobile.css"/>
 	<link rel="stylesheet" type="text/css" href="css/table.css" />
 </head>
 <body>
 	<div id="frame">
 		<div id="header">
-			<h1>Lekker poetsen!<button id="weekButton">Volgende week</button></h1>
+			<img id="logo" src="images/logo.png">
+			<div id="headerText">
+				<h1>Lekker poetsen!</h1>
+				<p>Welkom <span id="welkomSpan"></span>!</p>
+			</div>
 		</div>
 		
-		<div id="menu">
-			<ul id="navbar">
-				<li><a href="overzicht.html">Overzicht</a></li>
-				<li><a href="statistiek.html">Statistieken</a></li>
-				<li><a href="taak-toevoegen.html">Taak toevoegen</a></li>
-				<li><a href="taak-verwijderen.html">Taak verwijderen/wijzigen</a></li>
-				<li><a href="uitkeren.html" class="currentPage">Uitkeren</a></li>
-				<li><a id="logout">Uitloggen</a></li>
-			</ul>
+		<div class="dropdown">
+			<img id="menuIcon" src="images/menuIcon.png">
+			<div id="menu" class="dropdown-content">
+				<ul id="navbar">
+					<li><a href="overzicht.html">Overzicht</a></li>
+					<li><a href="statistiek.html">Statistieken</a></li>
+					<li><a href="taak-toevoegen.html">Taak toevoegen</a></li>
+					<li><a href="taak-verwijderen.html">Taak verwijderen/wijzigen</a></li>
+					<li><a href="uitkeren.html" class="currentPage">Uitkeren</a></li>
+					<li><a id="logout">Uitloggen</a></li>
+				</ul>
+			</div>
 		</div>
 		
 		<div id="container">
 			<h2>Uitkeren</h2>
-			<div id="tableDiv">
+			<div id="content">
 				<table id="schulden"></table>
 				<table id="verdeling"></table>
 				<button id="uitkeren">Uitkeren</button>
@@ -35,6 +44,7 @@
 	
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 	<script src="javascript/auth.js"></script>
+	<script src="javascript/dropdown.js"></script>
 	<script src="javascript/uitkeren.js"></script>
 </body>
 </html>

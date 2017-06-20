@@ -1,29 +1,5 @@
 #outerBox {
 	border-radius: 5px;
-	background-color: #f2f2f2;
+	background-color: #e0f2f1;
 	padding: 20px;
-}
-
-#growingDiv {
-	max-height: 800px;
-    position: relative;
-    padding-bottom: 100%;
-    height: 0;
-    overflow:hidden;
-}
-
-#chart_div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width:100%;
-    height:20%;
-}
-
-#curve_chart {
-    position: absolute;
-    top: 20%;
-    left: 0;
-    width:100%;
-    height:20%;
 }

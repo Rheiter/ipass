@@ -2,6 +2,46 @@ $(function() {
 	loadTaken();
 });
 
+$("#form").validate({
+   rules: {
+	   naam: {
+		   required: true,
+		   minlength: 2,
+		   maxlength: 20,
+		   letterswithbasicpunc: true
+	   },
+	   omschrijving: {
+		   required: false,
+		   maxlength: 400,
+		   letterswithbasicpunc: true
+	   },
+	   boete: {
+		   required: true,
+		   number:true,
+		   min: 0,
+		   max: 9999
+	   },
+   },
+   messages: {
+	   naam: {
+		   required: "Dit veld is verplicht.<br>",
+		   minlength: "Gebruik minstens 2 karakters.<br>",
+		   maxlength: "Gebruik maximaal 20 karakters.<br>",
+		   letterswithbasicpunc: "Gebruik alleen letters en interpunctie.<br>"
+	   },
+	   omschrijving: {
+		   maxlength: "Gebruik maximaal 400 karakters.<br>",
+		   letterswithbasicpunc: "Gebruik alleen letters en interpunctie.<br>"
+	   },
+	   boete: {
+		   required: "Dit veld is verplicht.<br>",
+		   number: "Vul een geldig getal in.<br>",
+		   min: "Negatieve waarden niet toegestaan.<br>",
+		   max: "Boetes mogen niet hoger zijn dan \u20AC9999.<br> "
+	   }
+   }
+});
+
 function loadTaken() {
 	$("#confirm").hide();
 	var uri = "restservices/taken";
@@ -47,22 +87,24 @@ $("#delete").click(function() {
 });
 
 $("#update").click(function() {
-	var uri = "restservices/taken/" + $(".selected").data().taakID;
-	$.ajax(uri, {
-		type: "put",
-		data: $("#form").serialize(),
-		beforeSend: function (xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-		},
-		success: function(response) {
-			loadTaken();
-			$("#removed").text("De taak \"" + $("#naam").val() + "\" is gewijzigd. ");
-		},
-		error: function(response) {
-			$("#removed").text("Kon de taak \"" + $("#naam").val() + "\" niet wijzigen. ");
-		}
-	});
+	if ($("#form").valid() == true) {
+		var uri = "restservices/taken/" + $(".selected").data().taakID;
+		$.ajax(uri, {
+			type: "put",
+			data: $("#form").serialize(),
+			beforeSend: function (xhr) {
+				var token = window.sessionStorage.getItem("sessionToken");
+				xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+			},
+			success: function(response) {
+				loadTaken();
+				$("#removed").text("De taak \"" + $("#naam").val() + "\" is gewijzigd. ");
+			},
+			error: function(response) {
+				$("#removed").text("Kon de taak \"" + $("#naam").val() + "\" niet wijzigen. ");
+			}
+		});
+	}
 });
 
 function updateThisWeek(taakID, sysdate) {

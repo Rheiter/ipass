@@ -3,31 +3,40 @@
 <head>
 	<title>Lekker Poetsen!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/grid.css" />
+	<link rel="stylesheet" media="only screen and (min-width: 901px)" href="css/grid.css"/>
+	<link rel="stylesheet" media="only screen and (min-width: 601px) and (max-width: 900px)" href="css/grid-narrow.css"/>
+	<link rel="stylesheet" media="only screen and (max-width: 600px)" href="css/grid-mobile.css"/>
 	<link rel="stylesheet" type="text/css" href="css/form.css" />
 	<link rel="stylesheet" type="text/css" href="css/taak-verwijderen.css" />
 </head>
 <body>
 	<div id="frame">
 		<div id="header">
-			<h1>Lekker poetsen!</h1>
+			<img id="logo" src="images/logo.png">
+			<div id="headerText">
+				<h1>Lekker poetsen!</h1>
+				<p>Welkom <span id="welkomSpan"></span>!</p>
+			</div>
 		</div>
 		
-		<div id="menu">
-			<ul id="navbar">
-				<li><a href="overzicht.html">Overzicht</a></li>
-				<li><a href="statistiek.html">Statistieken</a></li>
-				<li><a href="taak-toevoegen.html">Taak toevoegen</a></li>
-				<li><a href="taak-verwijderen.html" class="currentPage">Taak verwijderen/wijzigen</a></li>
-				<li><a href="uitkeren.html">Uitkeren</a></li>
-				<li><a id="logout">Uitloggen</a></li>
-			</ul>
+		<div class="dropdown">
+			<img id="menuIcon" src="images/menuIcon.png">
+			<div id="menu" class="dropdown-content">
+				<ul id="navbar">
+					<li><a href="overzicht.html">Overzicht</a></li>
+					<li><a href="statistiek.html">Statistieken</a></li>
+					<li><a href="taak-toevoegen.html">Taak toevoegen</a></li>
+					<li><a href="taak-verwijderen.html" class="currentPage">Taak verwijderen/wijzigen</a></li>
+					<li><a href="uitkeren.html">Uitkeren</a></li>
+					<li><a id="logout">Uitloggen</a></li>
+				</ul>
+			</div>
 		</div>
 		
 		<div id="container">
 			<h3>Taak toevoegen</h3>
 			<p><span id="removed"></span>Selecteer een taak om te verwijderen/wijzigen.</p>
-			<div id=formDiv>
+			<div id=content>
 				<div id="takenDiv">
 					<ul id="taken"></ul>
 				</div>
@@ -40,8 +49,8 @@
 					<label for="boete">Boete</label>
 					<input type="number" id="boete" name="boete" placeholder="Hoogte van de boete..">
 					<div id="buttons">
-						<input type="button" id="update" value="Wijzigen">
 						<input type="button" id="delete" value="Verwijderen">
+						<input type="button" id="update" value="Wijzigen">
 					</div>
 				</form>
 				</div>
@@ -50,7 +59,10 @@
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/additional-methods.js"></script>
 	<script src="javascript/auth.js"></script>
+	<script src="javascript/dropdown.js"></script>
 	<script src="javascript/taak-verwijderen.js"></script>
 </body>
 </html>

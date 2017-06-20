@@ -2,7 +2,7 @@ if (sessionStorage.date == null) {
 	sessionStorage.date = new Date();
 }
 
-$("#weekButton").click(function() {
+$("#logo").click(function() {
 	var date = new Date(sessionStorage.date);
 	var dateString = date.getFullYear() + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
 	
@@ -15,7 +15,9 @@ $("#weekButton").click(function() {
 		},
 		success: function(data) {
 			console.log("succes");
-			console.log(data);
+			var sessionDate = new Date(sessionStorage.date);
+			sessionDate = ("0" + sessionDate.getDate()).slice(-2) + "/" + ("0" + (sessionDate.getMonth() + 1)).slice(-2) + "/" + sessionDate.getFullYear();
+			$("#datumSpan").text(sessionDate);
 		},
 		error: function() {
 			console.log("error");
@@ -24,6 +26,5 @@ $("#weekButton").click(function() {
 	
 	date.setDate(date.getDate() + 7);
 	sessionStorage.date = (date);
-	console.log(date);
 	init();
 });

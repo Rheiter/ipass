@@ -21,7 +21,9 @@ function loadBewonerTaken() {
 		},
 		success: function(data) {
 			$.each(data, function (i, week) {
-				$("#rooster").append("<tr><td>" + week.datum + "</td></tr>");
+				var datumString = week.datum;
+				var datumArray = datumString.split("-");
+				$("#rooster").append("<tr><td>" + datumArray[2] + "/" + datumArray[1] + "/" + datumArray[0] + "</td></tr>");
 				$.each(week.taken, function (j, bewonerTaak) {
 					if (bewonerTaak.gedaan == true) {
 						var gedaan = "gedaan";
