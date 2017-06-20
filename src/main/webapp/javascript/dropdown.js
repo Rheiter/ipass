@@ -1,5 +1,4 @@
 $("#menuIcon").click(function() {
-	console.log("click");
 	$("#menu").toggleClass("show");
 });
 
