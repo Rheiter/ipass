@@ -82,7 +82,8 @@ $("table").on("click", "td", function() {
 	var gedaan = data.gedaan;
 	if (Object.keys(data).length > 0
 			&& gedaan == false
-			&& data.bewoner == sessionStorage.getItem("gebruikersnaam")) {
+			&& data.bewoner == sessionStorage.getItem("gebruikersnaam")
+			&& confirm("Weet je zeker dat je de taak \"" + data.taak + "\" wilt aftekenen?") == true) {
 		data.gedaan = !(data.gedaan);
 		var uri = "restservices/bewoner-taak";
 		$.ajax(uri, {

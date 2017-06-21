@@ -66,28 +66,32 @@ function loadTaken() {
 }
 
 $("#delete").click(function() {
-	var uri = "restservices/taken/" + $(".selected").data().taakID;
-	$.ajax(uri, {
-		type: "delete",
-		beforeSend: function (xhr) {
-			var token = window.sessionStorage.getItem("sessionToken");
-			xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
-		},
-		success: function(response) {
-			loadTaken();
-			var date = new Date(sessionStorage.date);
-			date = date.getFullYear() + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
-			updateThisWeek(response.taakID, date);
-			$("#removed").text("De taak \"" + $(".selected").data().naam + "\" is verwijderd. ");
-		},
-		error: function(response) {
-			$("#removed").text("Kon de taak \"" + $(".selected").data().naam + "\" niet verwijderen. ");
-		}
-	});
+	if (confirm("Weet je zeker dat je de taak \"" + $(".selected").data().naam + "\" wilt verwijderen?") == true) {
+		var uri = "restservices/taken/" + $(".selected").data().taakID;
+		$.ajax(uri, {
+			type: "delete",
+			beforeSend: function (xhr) {
+				var token = window.sessionStorage.getItem("sessionToken");
+				xhr.setRequestHeader( 'Authorization', 'Bearer ' + token);
+			},
+			success: function(response) {
+				loadTaken();
+				var date = new Date(sessionStorage.date);
+				date = date.getFullYear() + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + ("0" + date.getDate()).slice(-2);
+				updateThisWeek(response.taakID, date);
+				$("#removed").text("De taak \"" + $(".selected").data().naam + "\" is verwijderd. ");
+			},
+			error: function(response) {
+				$("#removed").text("Kon de taak \"" + $(".selected").data().naam + "\" niet verwijderen. ");
+			}
+		});
+	}
 });
 
 $("#update").click(function() {
-	if ($("#form").valid() == true) {
+	console.log($(".selected").data());
+	if (confirm("Weet je zeker dat je de taak \"" + $(".selected").data().naam + "\" wilt wijzigen?") == true &&
+			$("#form").valid() == true) {
 		var uri = "restservices/taken/" + $(".selected").data().taakID;
 		$.ajax(uri, {
 			type: "put",
