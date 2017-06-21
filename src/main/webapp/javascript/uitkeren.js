@@ -38,6 +38,7 @@ $("#uitkeren").click(function() {
 						}
 					});
 				});
+				$("#uitkeren").hide();
 			},
 			error: function() {
 				console.log("error");

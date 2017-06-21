@@ -2,6 +2,10 @@ body {
 	font-family: helvetica, sans-serif;
 }
 
+body, html {
+	margin: 0px;
+}
+
 #frame {
 	display: grid;
 	grid-template-columns: 1fr 6fr;
